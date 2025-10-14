@@ -1,0 +1,56 @@
+/* Default light mode */
+body {
+    background-color: #ffffff;
+    color: #111;
+    transition: background 0.3s, color 0.3s;
+}
+
+/* Dark mode */
+body.dark {
+    background-color: #1e1e1e;
+    color: #f1f1f1;
+}
+
+/* Sidebar */
+.sidebar {
+    background: #f9f9f9;
+    color: #333;
+}
+
+body.dark .sidebar {
+    background: #2a2a2a;
+    color: #e1e1e1;
+}
+
+/* Chat bubbles */
+.user-message {
+    background: #d1fae5;
+    text-align: right;
+}
+
+body.dark .user-message {
+    background: #064e3b;
+    color: #e6ffe6;
+}
+
+.bot-message {
+    background: #f3f4f6;
+    text-align: left;
+}
+
+body.dark .bot-message {
+    background: #374151;
+    color: #f3f3f3;
+}
+
+/* Input box */
+.chat-input {
+    background: #fff;
+    border: 1px solid #ccc;
+}
+
+body.dark .chat-input {
+    background: #2a2a2a;
+    border: 1px solid #555;
+    color: #f1f1f1;
+}

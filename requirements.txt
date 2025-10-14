@@ -1,0 +1,29 @@
+# === Core Framework ===
+fastapi
+uvicorn[standard]
+
+# === AI & OpenAI ===
+openai
+
+# === Environment & Config ===
+python-dotenv
+
+# === Data & Machine Learning ===
+numpy
+pandas
+scikit-learn
+
+# === Database & ORM ===
+sqlalchemy
+alembic
+
+# === Data Validation & HTTP ===
+pydantic
+requests
+
+# === Firebase ===
+firebase-admin
+
+# === Optional Utilities (recommended) ===
+httpx          # async HTTP client (works better with FastAPI than requests)
+tqdm           # progress bars for embedding scripts

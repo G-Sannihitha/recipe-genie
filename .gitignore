@@ -1,0 +1,57 @@
+# === Python (Backend) ===
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+.env
+.env.local
+instance/
+*.db
+*.sqlite3
+
+# Ignore backend cache & test files
+backend/__pycache__/
+backend/app/__pycache__/
+backend/test_env.py
+backend/test_firestore.py
+backend/serviceAccountKey.json
+
+# === Data ===
+data/embeddings/
+data/*.csv
+!data/recipes.csv    # keep only recipes.csv tracked if needed
+
+# === Node / React (Frontend) ===
+frontend/node_modules/
+frontend/build/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+
+# === Root Node files ===
+node_modules/
+dist/
+build/
+.env
+.env.local
+
+# === Firebase / Keys ===
+serviceAccountKey.json
+firebase.json
+*.key
+*.pem
+
+# === Scripts ===
+scripts/.env
+scripts/__pycache__/
+
+# === System / OS ===
+.DS_Store
+Thumbs.db
+
+# === IDE / Editor ===
+.vscode/
+.idea/
+*.log
