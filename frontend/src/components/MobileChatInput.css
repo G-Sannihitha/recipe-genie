@@ -1,0 +1,102 @@
+/* MobileChatInput.css - Fixed positioning */
+.mobile-input-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg-color);
+    border-top: 1px solid var(--border-color);
+    padding: 16px;
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+}
+
+.mobile-input-wrapper {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    background: var(--sidebar-bg);
+    padding: 8px 12px;
+    transition: all 0.3s ease;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.mobile-input-wrapper:focus-within {
+    border-color: #667eea;
+    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+}
+
+.mobile-textarea {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: var(--text-color);
+    font-size: 16px;
+    resize: none;
+    max-height: 120px;
+    outline: none;
+    font-family: inherit;
+    line-height: 1.4;
+    padding: 8px 4px;
+}
+
+.mobile-textarea::placeholder {
+    color: var(--muted-color);
+}
+
+.mobile-send-btn {
+    background: var(--gradient-primary);
+    border: none;
+    color: white;
+    padding: 8px;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.mobile-send-btn:disabled {
+    background: var(--muted-color);
+    cursor: not-allowed;
+    transform: none;
+}
+
+.mobile-send-btn:not(:disabled):active {
+    transform: scale(0.95);
+}
+
+.mobile-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid transparent;
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Safe area support */
+@supports (padding: max(0px)) {
+    .mobile-input-container {
+        padding-bottom: max(16px, env(safe-area-inset-bottom));
+        padding-left: max(16px, env(safe-area-inset-left));
+        padding-right: max(16px, env(safe-area-inset-right));
+    }
+}

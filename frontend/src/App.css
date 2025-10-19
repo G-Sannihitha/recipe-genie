@@ -4,9 +4,9 @@
 
 /* === Reset === */
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 body {
@@ -16,31 +16,31 @@ body {
 /* === Theme Variables === */
 :root {
   --bg-color: #ffffff;
-  --sidebar-bg: #f7f7f8;
-  --text-color: #000000;
-  --border-color: #e5e5e5;
+  --sidebar-bg: #f8f9fa;
+  --text-color: #333333;
+  --muted-color: #666666;
+  --border-color: #e0e0e0;
   --hover-color: rgba(0, 0, 0, 0.05);
-  --active-color: rgba(0, 0, 0, 0.08);
-  --muted-color: #666;
+  --active-color: rgba(102, 126, 234, 0.1);
+  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 .dark-mode {
-  --bg-color: #202123;
-  --sidebar-bg: #171717;
-  --text-color: #ffffff;
-  --border-color: #2d2d2f;
+  --bg-color: #1a1a1a;
+  --sidebar-bg: #2d2d2d;
+  --text-color: #e0e0e0;
+  --muted-color: #a0a0a0;
+  --border-color: #404040;
   --hover-color: rgba(255, 255, 255, 0.05);
-  --active-color: rgba(255, 255, 255, 0.1);
-  --muted-color: #999;
+  --active-color: rgba(102, 126, 234, 0.2);
 }
 
 /* === Global === */
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background-color: var(--bg-color);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-color);
   color: var(--text-color);
-  transition: background-color 0.3s ease, color 0.3s ease;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 /* === App Structure === */
@@ -57,7 +57,8 @@ body {
 .header {
   position: fixed;
   top: 0;
-  left: 260px; /* expands with sidebar width */
+  left: 260px;
+  /* expands with sidebar width */
   right: 0;
   height: 60px;
   z-index: 1100;
@@ -118,7 +119,8 @@ body.sidebar-collapsed .chat-area {
 .main-layout {
   display: flex;
   height: 100vh;
-  margin-top: 60px; /* below header */
+  margin-top: 60px;
+  /* below header */
   overflow: hidden;
   background: var(--bg-color);
   transition: all 0.25s ease;
@@ -155,6 +157,7 @@ body.sidebar-collapsed .chat-area {
    RESPONSIVE - MOBILE OPTIMIZATION
    ========================================================= */
 @media (max-width: 900px) {
+
   /* Header always full width on mobile */
   .header {
     left: 0;
@@ -226,8 +229,132 @@ body.sidebar-collapsed .chat-area {
     opacity: 0;
     transform: translateY(-6px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Add to your existing App.css */
+@media (max-width: 768px) {
+  .main-layout {
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 85%;
+    height: 100vh;
+    z-index: 2000;
+    transition: left 0.3s ease;
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+
+  .chat-area {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .header {
+    left: 0;
+    width: 100%;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .sidebar {
+    width: 280px;
+  }
+
+  .chat-area {
+    margin-left: 280px;
+  }
+}
+
+/* C:\AI_CHATBOT\recipe-genie\frontend\src\App.css */
+/* Mobile specific styles */
+/* Add to App.css for mobile */
+@media (max-width: 768px) {
+  .mobile-chat-area {
+    margin-top: 60px;
+    height: calc(100vh - 60px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Ensure messages don't go behind header */
+  .mobile-chat-messages {
+    padding-top: 0;
+    margin-top: 0;
+  }
+
+  /* Safe area support */
+  @supports (padding: max(0px)) {
+    .mobile-chat-area {
+      margin-top: calc(60px + env(safe-area-inset-top));
+      height: calc(100vh - 60px - env(safe-area-inset-top));
+    }
+  }
+}
+
+/* ===== TABLET STYLES ===== */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .sidebar {
+    width: 280px;
+  }
+
+  .chat-area {
+    margin-left: 280px;
+  }
+
+  .header {
+    left: 280px;
+  }
+
+  body.sidebar-collapsed .sidebar {
+    width: 68px;
+  }
+
+  body.sidebar-collapsed .chat-area {
+    margin-left: 68px;
+  }
+
+  body.sidebar-collapsed .header {
+    left: 68px;
+  }
+}
+
+/* ===== TABLET STYLES ===== */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .sidebar {
+    width: 280px;
+  }
+
+  .chat-area {
+    margin-left: 280px;
+  }
+
+  .header {
+    left: 280px;
+  }
+
+  body.sidebar-collapsed .sidebar {
+    width: 68px;
+  }
+
+  body.sidebar-collapsed .chat-area {
+    margin-left: 68px;
+  }
+
+  body.sidebar-collapsed .header {
+    left: 68px;
   }
 }

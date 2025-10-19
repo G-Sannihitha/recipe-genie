@@ -1,5 +1,4 @@
-/* Chat.css - Fixed Header Spacing, Emoji Colors, Markdown Support, and Proper Spacing */
-
+/* Chat.css - Updated with Mobile Styles */
 .chat-container {
   flex: 1;
   display: flex;
@@ -7,6 +6,10 @@
   height: 100%;
   background: var(--bg-color);
   position: relative;
+}
+
+.chat-container.mobile {
+  height: 100vh;
 }
 
 .chat-messages {
@@ -210,6 +213,7 @@
 }
 
 @keyframes typing {
+
   0%,
   60%,
   100% {
@@ -432,8 +436,6 @@
 /* Closing text */
 .plain-text-content .text-line:last-child {
   margin-top: 20px;
-  /* font-style: italic; */
-  /* color: var(--muted-color); */
   line-height: 1.6;
 }
 
@@ -446,8 +448,8 @@
 }
 
 /* Better spacing between major sections */
-.section-heading + .bullet-item,
-.section-heading + .numbered-item {
+.section-heading+.bullet-item,
+.section-heading+.numbered-item {
   margin-top: 8px;
 }
 
@@ -465,8 +467,14 @@
   border-bottom-color: rgba(102, 126, 234, 0.3);
 }
 
-/* Mobile responsiveness */
+/* Add to your existing Chat.css */
+
+/* Mobile-specific chat optimizations */
 @media (max-width: 768px) {
+  .chat-container.mobile {
+    height: 100%;
+  }
+
   .welcome {
     padding: 20px 16px 40px;
   }
@@ -477,66 +485,68 @@
 
   .welcome-subtitle {
     font-size: 16px;
-    margin-bottom: 0%;
+    margin-bottom: 30px;
   }
 
   .suggestions-grid {
     grid-template-columns: 1fr;
     gap: 12px;
+    margin-bottom: 30px;
+  }
+
+  .suggestion-card {
+    padding: 16px;
+    border-radius: 12px;
   }
 
   .message {
     max-width: 90%;
-    padding: 16px;
-    margin: 8px 16px;
+    padding: 14px 16px;
+    margin: 6px 16px;
+    border-radius: 16px;
   }
 
   .chat-input-container {
     padding: 16px;
+    margin-top: 0;
   }
 
-  .chef-avatar {
-    width: 60px;
-    height: 60px;
-    font-size: 24px;
+  .chat-input {
+    border-radius: 20px;
+    padding: 10px 14px;
   }
 
-  .typing-indicator {
-    max-width: 90%;
-    padding: 12px 16px;
-    margin: 8px 16px;
+  /* Better touch targets */
+  .suggestion-card {
+    -webkit-tap-highlight-color: transparent;
   }
 
-  /* Adjust plain text content for mobile */
-  .plain-text-content {
-    font-size: 14px;
-    line-height: 1.6;
+  .suggestion-card:active {
+    transform: scale(0.98);
+    background: var(--active-color);
+  }
+}
+
+/* Safe area support for mobile */
+@supports (padding: max(0px)) {
+  .chat-container.mobile {
+    padding-bottom: env(safe-area-inset-bottom);
   }
 
-  .numbered-item,
-  .bullet-item {
-    margin-bottom: 14px;
-    gap: 10px;
-    line-height: 1.6;
+  .chat-input-container {
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+  }
+}
+
+/* Tablet specific styles */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .suggestions-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
 
-  .numbered-item .number {
-    min-width: 22px;
-    font-size: 0.9em;
-  }
-
-  .section-heading {
-    font-size: 1.05em;
-    margin: 28px 0 18px 0;
-  }
-
-  .text-line {
-    margin-bottom: 14px;
-    line-height: 1.6;
-  }
-
-  .plain-text-content br {
-    margin: 10px 0;
+  .message {
+    max-width: 80%;
   }
 }
 
@@ -546,11 +556,11 @@
 }
 
 /* Ensure consistent vertical rhythm */
-.plain-text-content > * {
+.plain-text-content>* {
   margin-bottom: 16px;
 }
 
-.plain-text-content > *:last-child {
+.plain-text-content>*:last-child {
   margin-bottom: 0;
 }
 
@@ -567,4 +577,15 @@
 
 .dark-mode .chat-input {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Safe area support for mobile */
+@supports (padding: max(0px)) {
+  .chat-container.mobile {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .chat-input-container {
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+  }
 }

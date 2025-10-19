@@ -1,5 +1,5 @@
 /* ===============================
-   Recipe Genie - Sidebar.css (Final – stable tooltips)
+   Recipe Genie - Sidebar.css (Fixed chat titles - no truncation)
    =============================== */
 
 /* === Sidebar Base === */
@@ -14,8 +14,10 @@
   top: 0;
   left: 0;
   transition: width 0.25s ease;
-  z-index: 1600; /* header is 1100 */
-  isolation: isolate; /* lets children stack above header safely */
+  z-index: 1600;
+  /* header is 1100 */
+  isolation: isolate;
+  /* lets children stack above header safely */
   font-family: "Inter", system-ui, sans-serif;
   overflow: visible !important;
 }
@@ -72,9 +74,11 @@
   color: #444;
   transition: color 0.25s ease;
 }
+
 .sidebar-toggle:hover {
   background: rgba(0, 0, 0, 0.06);
 }
+
 .sidebar-toggle:hover svg {
   color: #000;
 }
@@ -116,6 +120,7 @@
   justify-content: center;
   cursor: pointer;
 }
+
 .sidebar:not(.collapsed) .tooltip:hover::after {
   opacity: 1;
   transform: translateY(-50%) scale(1);
@@ -142,8 +147,10 @@
 
 /* === Global Tooltip (used only for collapsed state via JS) === */
 .global-tooltip {
-  position: fixed; /* relative to viewport */
-  transform: translateY(-50%); /* vertical center by JS top value */
+  position: fixed;
+  /* relative to viewport */
+  transform: translateY(-50%);
+  /* vertical center by JS top value */
   background: rgba(0, 0, 0, 0.9);
   color: #fff;
   font-size: 13px;
@@ -152,7 +159,8 @@
   border-radius: 8px;
   white-space: nowrap;
   pointer-events: none;
-  z-index: 100000; /* always above header */
+  z-index: 100000;
+  /* always above header */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
@@ -174,10 +182,12 @@
   transition: all 0.2s ease;
   box-shadow: 0 2px 6px rgba(118, 75, 162, 0.25);
 }
+
 .new-chat-btn:hover {
   transform: translateY(-1px);
   background: linear-gradient(135deg, #5e6fdb 0%, #6b3d90 100%);
 }
+
 .sidebar.collapsed .new-chat-btn span {
   display: none;
 }
@@ -188,9 +198,11 @@
   overflow-y: auto;
   padding: 6px 10px 16px;
 }
+
 .date-group {
   margin-bottom: 12px;
 }
+
 .date-group-header {
   font-size: 11px;
   text-transform: uppercase;
@@ -203,16 +215,22 @@
 .chat-item {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 8px 10px;
+  align-items: flex-start;
+  /* Changed to flex-start for better text wrapping */
+  padding: 10px 10px;
+  /* Increased padding for better spacing */
   border-radius: 8px;
   transition: background 0.15s ease;
   cursor: pointer;
   position: relative;
+  min-height: auto;
+  /* Allow natural height */
 }
+
 .chat-item:hover {
   background: var(--hover-color, rgba(0, 0, 0, 0.05));
 }
+
 .chat-item.active {
   background: var(--active-color, rgba(102, 126, 234, 0.15));
   font-weight: 600;
@@ -220,15 +238,33 @@
 
 .chat-main {
   flex: 1;
-  overflow: hidden;
+  overflow: visible !important;
+  /* Changed from hidden */
+  margin-right: 8px;
+  /* Add space between text and menu */
 }
+
+/* === FIXED CHAT TITLE - NO TRUNCATION === */
 .chat-title {
   font-size: 14px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow: visible !important;
+  /* Changed from hidden */
+  text-overflow: unset !important;
+  /* Changed from ellipsis */
+  white-space: normal !important;
+  /* Changed from nowrap - ALLOWS WRAPPING */
   color: var(--text-color, #111);
   font-weight: 500;
+  word-wrap: break-word;
+  /* Ensure long words break properly */
+  word-break: break-word;
+  /* Additional break insurance */
+  line-height: 1.4;
+  /* Better line spacing */
+  display: block;
+  width: 100%;
+  max-height: none;
+  /* Remove height restrictions */
 }
 
 /* === Rename Input === */
@@ -246,6 +282,7 @@
   transition: background 0.2s ease, box-shadow 0.2s ease;
   box-shadow: inset 0 0 0 1px var(--border-color);
 }
+
 .rename-input:focus {
   background: var(--bg-color);
   box-shadow: inset 0 0 0 2px #667eea;
@@ -260,13 +297,18 @@
   border: none;
   outline: none;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  /* Align with text start */
   justify-content: center;
   transition: opacity 0.2s ease;
+  margin-top: 2px;
+  /* Better vertical alignment */
 }
+
 .chat-item:hover .chat-menu-trigger {
   opacity: 1;
 }
+
 .chat-menu-trigger:hover {
   background: var(--hover-color, rgba(0, 0, 0, 0.08));
 }
@@ -284,6 +326,7 @@
   z-index: 2000;
   animation: fadeIn 0.15s ease;
 }
+
 .context-item {
   display: flex;
   align-items: center;
@@ -299,13 +342,16 @@
   text-align: left;
   transition: background 0.15s ease, color 0.15s ease;
 }
+
 .context-item:hover {
   background: var(--hover-color, rgba(0, 0, 0, 0.05));
 }
+
 .context-item.delete {
   color: #e63946;
   font-weight: 500;
 }
+
 .context-item.delete:hover {
   background: rgba(230, 57, 70, 0.1);
 }
@@ -325,6 +371,7 @@
   z-index: 9999;
   animation: fadeIn 0.2s ease;
 }
+
 .delete-modal {
   background: #fff;
   border-radius: 12px;
@@ -335,25 +382,30 @@
   text-align: left;
   animation: scaleIn 0.25s ease;
 }
+
 .delete-modal h3 {
   margin: 0 0 8px;
   font-size: 18px;
   color: #111;
 }
+
 .delete-modal p {
   font-size: 14px;
   color: #555;
   margin-bottom: 20px;
 }
+
 .delete-modal strong {
   color: #111;
   font-weight: 600;
 }
+
 .delete-modal-actions {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
 }
+
 .cancel-btn,
 .confirm-btn {
   padding: 8px 16px;
@@ -362,20 +414,24 @@
   cursor: pointer;
   transition: all 0.2s ease;
 }
+
 .cancel-btn {
   border: 1px solid #ccc;
   background: #fff;
   color: #333;
 }
+
 .cancel-btn:hover {
   background: #f2f2f2;
 }
+
 .confirm-btn {
   border: none;
   background: #e63946;
   color: #fff;
   font-weight: 600;
 }
+
 .confirm-btn:hover {
   background: #c92d3a;
 }
@@ -386,16 +442,19 @@
     opacity: 0;
     transform: translateY(-4px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
+
 @keyframes scaleIn {
   from {
     transform: scale(0.9);
     opacity: 0;
   }
+
   to {
     transform: scale(1);
     opacity: 1;
@@ -407,14 +466,24 @@
   background: #1e1e1e;
   border-color: #333;
 }
+
 .dark-mode .sidebar-toggle svg {
   color: #e0e0e0;
 }
+
 .dark-mode .sidebar-toggle:hover svg {
   color: #fff;
 }
+
 .dark-mode .tooltip::after {
   background: rgba(255, 255, 255, 0.1);
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* === Force Override for Any Cached Styles === */
+.chat-title {
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
 }

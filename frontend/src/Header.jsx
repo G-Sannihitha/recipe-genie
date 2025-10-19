@@ -1,3 +1,4 @@
+// C:\AI_CHATBOT\recipe-genie\frontend\src\Header.jsx
 import React, { useState, useRef, useEffect } from "react";
 import { Sun, Moon, Monitor, LogOut } from "lucide-react";
 import { useAuth } from "./context/AuthContext";
@@ -36,11 +37,17 @@ const Header = () => {
       setDarkMode(mode === "dark");
       localStorage.setItem("theme", mode);
     }
+    setMenuOpen(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    setMenuOpen(false);
   };
 
   return (
     <header className="header">
-      {/* Left: Chef icon + Title */}
+      {/* Left: Title */}
       <div className="header-left">
         <span className="header-title">Recipe Genie</span>
       </div>
@@ -59,32 +66,60 @@ const Header = () => {
 
         {menuOpen && (
           <div className="dropdown-menu">
-            <div className="dropdown-item email-item">{email}</div>
-            <div className="dropdown-divider"></div>
-
-            <div className="dropdown-section-title">THEME</div>
-            <div
-              className="dropdown-item"
-              onClick={() => handleThemeChange("light")}
-            >
-              <Sun size={16} className="icon" /> Light
-            </div>
-            <div
-              className="dropdown-item"
-              onClick={() => handleThemeChange("dark")}
-            >
-              <Moon size={16} className="icon" /> Dark
-            </div>
-            <div
-              className="dropdown-item"
-              onClick={() => handleThemeChange("system")}
-            >
-              <Monitor size={16} className="icon" /> System Default
+            {/* User Info */}
+            <div className="user-info">
+              <img
+                src={profilePhoto}
+                alt="Profile"
+                className="user-info-avatar"
+                referrerPolicy="no-referrer"
+              />
+              <div className="user-details">
+                <div className="user-name">Hello, {username}</div>
+                <div className="user-email">{email}</div>
+              </div>
             </div>
 
             <div className="dropdown-divider"></div>
-            <div className="dropdown-item logout-item" onClick={logout}>
-              <LogOut size={16} className="icon" /> Logout
+
+            {/* Theme Section */}
+            <div className="dropdown-section">
+              <div className="section-title">THEME</div>
+              <div className="theme-options">
+                <div
+                  className={`theme-option ${!darkMode ? 'active' : ''}`}
+                  onClick={() => handleThemeChange("light")}
+                >
+                  <Sun size={16} className="theme-icon" />
+                  <span className="theme-label">Light</span>
+                  {!darkMode && <div className="theme-check">✓</div>}
+                </div>
+                <div
+                  className={`theme-option ${darkMode ? 'active' : ''}`}
+                  onClick={() => handleThemeChange("dark")}
+                >
+                  <Moon size={16} className="theme-icon" />
+                  <span className="theme-label">Dark</span>
+                  {darkMode && <div className="theme-check">✓</div>}
+                </div>
+                <div
+                  className="theme-option"
+                  onClick={() => handleThemeChange("system")}
+                >
+                  <Monitor size={16} className="theme-icon" />
+                  <span className="theme-label">System Default</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="dropdown-divider"></div>
+
+            {/* Logout */}
+            <div className="logout-section">
+              <div className="logout-option" onClick={handleLogout}>
+                <LogOut size={16} className="logout-icon" />
+                <span className="logout-label">Logout</span>
+              </div>
             </div>
           </div>
         )}

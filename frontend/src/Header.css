@@ -1,3 +1,4 @@
+/* C:\AI_CHATBOT\recipe-genie\frontend\src\Header.css */
 /* ===== Header Layout ===== */
 .header {
   position: fixed;
@@ -8,7 +9,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 20px;
+  padding: 0 20px;
   background: var(--bg-color);
   border-bottom: 1px solid var(--border-color);
   box-sizing: border-box;
@@ -17,20 +18,14 @@
 }
 
 /* Compact when sidebar collapses */
-.sidebar.collapsed ~ .header {
+.sidebar.collapsed~.header {
   left: 68px;
 }
 
-/* === Left Section: Chef + Title === */
+/* === Left Section: Title === */
 .header-left {
   display: flex;
   align-items: center;
-  gap: 10px;
-}
-
-.chef-icon {
-  font-size: px;
-  line-height: 2;
 }
 
 .header-title {
@@ -46,58 +41,56 @@
 .header-right {
   display: flex;
   align-items: center;
-  gap: 16px;
   position: relative;
 }
 
 .user-section {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding-right: 20px;
+  gap: 10px;
+  padding: 6px 12px;
+  border-radius: 8px;
   cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.user-section:hover {
+  background: var(--hover-color);
 }
 
 .profile-avatar {
-  width: 34px;
-  height: 34px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid var(--border-color);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.profile-avatar:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 8px rgba(102, 126, 234, 0.3);
 }
 
 .username {
   font-size: 14px;
   color: var(--text-color);
+  font-weight: 500;
 }
 
 /* === Dropdown Menu === */
 .dropdown-menu {
   position: absolute;
-  top: 58px;
+  top: 52px;
   right: 0;
   background: var(--bg-color);
   border: 1px solid var(--border-color);
   border-radius: 12px;
-  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.08);
-  min-width: 220px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  width: 280px;
   animation: fadeIn 0.2s ease;
-  font-size: 14px;
   overflow: hidden;
   z-index: 1200;
-  padding: 8px 0;
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(-4px);
+    transform: translateY(-8px);
   }
 
   to {
@@ -106,88 +99,165 @@
   }
 }
 
-.dropdown-item {
-  padding: 10px 16px;
+/* User Info Section */
+.user-info {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  padding: 16px;
+  background: var(--sidebar-bg);
+}
+
+.user-info-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border-color);
+}
+
+.user-details {
+  flex: 1;
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 2px;
+}
+
+.user-email {
+  font-size: 12px;
+  color: var(--muted-color);
+}
+
+/* Section Titles */
+.section-title {
+  font-size: 11px;
+  color: var(--muted-color);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 8px 16px 4px;
+}
+
+/* Theme Options */
+.theme-options {
+  padding: 4px 8px;
+}
+
+.theme-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition: background-color 0.2s ease;
   color: var(--text-color);
 }
 
-.dropdown-item:hover {
+.theme-option:hover {
   background: var(--hover-color);
 }
 
-.icon {
-  opacity: 0.85;
+.theme-option.active {
+  background: var(--active-color);
 }
 
-.email-item {
-  font-weight: 600;
-  cursor: default;
-  color: var(--text-color);
+.theme-icon {
+  opacity: 0.8;
 }
 
-.dropdown-divider {
-  height: 1px;
-  background: var(--border-color);
-  margin: 6px 0;
+.theme-label {
+  flex: 1;
+  font-size: 14px;
 }
 
-.dropdown-section-title {
-  font-size: 12px;
-  color: var(--muted-color);
-  font-weight: 600;
-  padding: 4px 16px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+.theme-check {
+  color: #667eea;
+  font-weight: bold;
+  font-size: 14px;
 }
 
-.logout-item {
+/* Logout Section */
+.logout-section {
+  padding: 8px;
+}
+
+.logout-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
   color: #e63946;
-  font-weight: 600;
+  font-weight: 500;
 }
 
-.logout-item:hover {
+.logout-option:hover {
   background: rgba(230, 57, 70, 0.1);
 }
 
-/* === Dark Mode Fix === */
-/* === Dark Mode Fix === */
+.logout-icon {
+  opacity: 0.8;
+}
+
+.logout-label {
+  font-size: 14px;
+}
+
+/* Divider */
+.dropdown-divider {
+  height: 1px;
+  background: var(--border-color);
+  margin: 0;
+}
+
+/* === Dark Mode Styles === */
 .dark-mode .dropdown-menu {
   background: #1f1f1f;
   border-color: #333;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
-.dark-mode .dropdown-item {
-  color: #e6e6e6;
+.dark-mode .user-info {
+  background: #2a2a2a;
 }
 
-.dark-mode .dropdown-item:hover {
+.dark-mode .theme-option:hover {
   background: rgba(255, 255, 255, 0.08);
 }
 
-.dark-mode .email-item {
-  color: #bcbcbc;
+.dark-mode .theme-option.active {
+  background: rgba(102, 126, 234, 0.15);
 }
 
-.dark-mode .dropdown-section-title {
-  color: #999;
-}
-
-.dark-mode .dropdown-divider {
-  background: #3a3a3a;
-}
-
-/* 🔴 Keep Logout red even in dark mode */
-.dark-mode .logout-item {
-  color: #f87171 !important;
-  font-weight: 600;
-}
-
-.dark-mode .logout-item:hover {
+.dark-mode .logout-option:hover {
   background: rgba(248, 113, 113, 0.12);
+}
+
+/* === Responsive Header === */
+@media (max-width: 768px) {
+  .header {
+    padding: 0 16px;
+    height: 56px;
+    left: 0;
+  }
+
+  .header-title {
+    font-size: 18px;
+  }
+
+  .username {
+    display: none;
+  }
+
+  .dropdown-menu {
+    width: 260px;
+    right: 8px;
+  }
 }

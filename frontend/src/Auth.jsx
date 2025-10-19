@@ -8,6 +8,7 @@ import {
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { auth, googleProvider } from "./firebase";
+import { Eye, EyeOff } from "lucide-react"; // Import eye icons
 import "./Auth.css";
 
 const Auth = () => {
@@ -18,6 +19,8 @@ const Auth = () => {
   const [displayName, setDisplayName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
 
   // ---- Validate password strength ----
@@ -119,6 +122,15 @@ const Auth = () => {
     }
   };
 
+  // ---- Toggle password visibility ----
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
+
   return (
     <div className="auth-container">
       <div className="auth-wallpaper"></div>
@@ -184,29 +196,47 @@ const Auth = () => {
             />
           </div>
 
-          <div className="input-group">
+          {/* Password Field with Eye Icon */}
+          <div className="input-group password-input-group">
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               onKeyPress={handleKeyPress}
-              className="form-input"
+              className="form-input password-input"
               disabled={isLoading}
             />
+            <button
+              type="button"
+              className="password-toggle-btn"
+              onClick={togglePasswordVisibility}
+              disabled={isLoading}
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
           </div>
 
+          {/* Confirm Password Field with Eye Icon */}
           {isSignUp && (
-            <div className="input-group">
+            <div className="input-group password-input-group">
               <input
-                type="password"
+                type={showConfirmPassword ? "text" : "password"}
                 placeholder="Confirm password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 onKeyPress={handleKeyPress}
-                className="form-input"
+                className="form-input password-input"
                 disabled={isLoading}
               />
+              <button
+                type="button"
+                className="password-toggle-btn"
+                onClick={toggleConfirmPasswordVisibility}
+                disabled={isLoading}
+              >
+                {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
             </div>
           )}
 

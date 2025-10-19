@@ -1,6 +1,12 @@
 // src/firebase.js
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  setPersistence,
+  browserLocalPersistence,
+  onAuthStateChanged,
+} from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
@@ -21,21 +27,35 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const googleProvider = new GoogleAuthProvider();
 
+// ✅ Set persistence (if you need it)
+// Remove this line if you don't specifically need persistence
+// setPersistence(auth, browserLocalPersistence)
+//   .then(() => {
+//     console.log("Auth persistence set to local");
+//   })
+//   .catch((error) => {
+//     console.error("Error setting auth persistence:", error);
+//   });
+
 // ✅ Auth context (for global user state)
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       setUser(firebaseUser);
+      setLoading(false);
     });
     return () => unsubscribe();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, loading }}>
+      {!loading && children}
+    </AuthContext.Provider>
   );
 };
 

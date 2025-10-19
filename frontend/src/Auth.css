@@ -23,7 +23,7 @@
     height: 100%;
     background:
         linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.92)),
-        url('./assets/Wallpaper.png') center/cover;
+        url('/Wallpaper.png') center/cover;
     filter: brightness(0.98);
     z-index: 0;
 }
@@ -181,6 +181,7 @@
 
 .input-group {
     margin-bottom: 14px;
+    position: relative;
 }
 
 .form-input {
@@ -201,6 +202,43 @@
 
 .form-input::placeholder {
     color: #999;
+}
+
+/* ===== Password Input with Eye Icon ===== */
+.password-input-group {
+    position: relative;
+}
+
+.password-input {
+    padding-right: 45px;
+    /* Space for the eye icon */
+}
+
+.password-toggle-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.password-toggle-btn:hover:not(:disabled) {
+    background: rgba(0, 0, 0, 0.05);
+    color: #333;
+}
+
+.password-toggle-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 /* ===== Toggle (Signup / Login switch) ===== */
@@ -249,6 +287,27 @@
     }
 }
 
+/* ===== Forgot Password ===== */
+.forgot-password {
+    text-align: right;
+    margin-top: -8px;
+    margin-bottom: 10px;
+}
+
+.forgot-btn {
+    background: none;
+    border: none;
+    color: #667eea;
+    font-size: 13px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.forgot-btn:hover {
+    text-decoration: underline;
+    color: #764ba2;
+}
+
 /* ===== Responsive Design ===== */
 @media (max-width: 480px) {
     .auth-card {
@@ -263,7 +322,7 @@
     .auth-wallpaper {
         background:
             linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)),
-            url('./assets/Wallpaper.png') center/cover;
+            url('/Wallpaper.png') center/cover;
     }
 
     .auth-card {
@@ -283,6 +342,15 @@
         color: white;
     }
 
+    .password-toggle-btn {
+        color: #999;
+    }
+
+    .password-toggle-btn:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.1);
+        color: #ccc;
+    }
+
     .divider::before,
     .divider::after {
         background: #404040;
@@ -295,24 +363,12 @@
     .toggle-btn {
         color: #9f8cff;
     }
-}
 
-.forgot-password {
-    text-align: right;
-    margin-top: -8px;
-    margin-bottom: 10px;
-}
+    .forgot-btn {
+        color: #9f8cff;
+    }
 
-.forgot-btn {
-    background: none;
-    border: none;
-    color: #667eea;
-    font-size: 13px;
-    cursor: pointer;
-    transition: color 0.2s;
-}
-
-.forgot-btn:hover {
-    text-decoration: underline;
-    color: #764ba2;
+    .forgot-btn:hover {
+        color: #b39cff;
+    }
 }
