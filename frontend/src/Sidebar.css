@@ -15,9 +15,7 @@
   left: 0;
   transition: width 0.25s ease;
   z-index: 1600;
-  /* header is 1100 */
   isolation: isolate;
-  /* lets children stack above header safely */
   font-family: "Inter", system-ui, sans-serif;
   overflow: visible !important;
 }
@@ -37,7 +35,6 @@
   position: relative;
 }
 
-/* Chef + Toggle wrapper */
 .sidebar-logo-wrapper {
   display: flex;
   align-items: center;
@@ -46,7 +43,6 @@
   position: relative;
 }
 
-/* Chef icon */
 .sidebar-logo {
   font-size: 26px;
   line-height: 1;
@@ -83,13 +79,12 @@
   color: #000;
 }
 
-/* === Tooltip Styling (expanded only – keep your working behavior) === */
+/* === Tooltip Styling === */
 .tooltip {
   position: relative;
   overflow: visible;
 }
 
-/* Tooltip inside sidebar (Close Sidebar) */
 .sidebar:not(.collapsed) .tooltip::after {
   content: attr(data-tooltip);
   position: absolute;
@@ -115,7 +110,7 @@
   transform: translateY(-50%) scale(1);
 }
 
-/* === Collapsed Hover Reveal (keep your original logic) === */
+/* === Collapsed Hover Reveal === */
 .sidebar.collapsed .sidebar-logo-wrapper {
   justify-content: center;
   cursor: pointer;
@@ -145,12 +140,10 @@
   transform: scale(0.8);
 }
 
-/* === Global Tooltip (used only for collapsed state via JS) === */
+/* === Global Tooltip === */
 .global-tooltip {
   position: fixed;
-  /* relative to viewport */
   transform: translateY(-50%);
-  /* vertical center by JS top value */
   background: rgba(0, 0, 0, 0.9);
   color: #fff;
   font-size: 13px;
@@ -160,7 +153,6 @@
   white-space: nowrap;
   pointer-events: none;
   z-index: 100000;
-  /* always above header */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
@@ -216,15 +208,12 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  /* Changed to flex-start for better text wrapping */
   padding: 10px 10px;
-  /* Increased padding for better spacing */
   border-radius: 8px;
   transition: background 0.15s ease;
   cursor: pointer;
   position: relative;
   min-height: auto;
-  /* Allow natural height */
 }
 
 .chat-item:hover {
@@ -239,32 +228,23 @@
 .chat-main {
   flex: 1;
   overflow: visible !important;
-  /* Changed from hidden */
   margin-right: 8px;
-  /* Add space between text and menu */
 }
 
-/* === FIXED CHAT TITLE - NO TRUNCATION === */
+/* === Chat Title === */
 .chat-title {
   font-size: 14px;
   overflow: visible !important;
-  /* Changed from hidden */
   text-overflow: unset !important;
-  /* Changed from ellipsis */
   white-space: normal !important;
-  /* Changed from nowrap - ALLOWS WRAPPING */
   color: var(--text-color, #111);
   font-weight: 500;
   word-wrap: break-word;
-  /* Ensure long words break properly */
   word-break: break-word;
-  /* Additional break insurance */
   line-height: 1.4;
-  /* Better line spacing */
   display: block;
   width: 100%;
   max-height: none;
-  /* Remove height restrictions */
 }
 
 /* === Rename Input === */
@@ -288,7 +268,7 @@
   box-shadow: inset 0 0 0 2px #667eea;
 }
 
-/* === 3-dot menu + context menu === */
+/* === Context Menu === */
 .chat-menu-trigger {
   opacity: 0;
   padding: 4px;
@@ -298,11 +278,9 @@
   outline: none;
   display: flex;
   align-items: flex-start;
-  /* Align with text start */
   justify-content: center;
   transition: opacity 0.2s ease;
   margin-top: 2px;
-  /* Better vertical alignment */
 }
 
 .chat-item:hover .chat-menu-trigger {
@@ -461,6 +439,50 @@
   }
 }
 
+/* === Empty / Loading State Styling === */
+.loading-chats,
+.empty-chats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted-color, #777);
+  font-size: 14px;
+  text-align: center;
+  padding: 40px 20px;
+  opacity: 0.9;
+}
+
+.loader-spinner {
+  width: 18px;
+  height: 18px;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-top-color: #764ba2;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 8px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.empty-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-color, #333);
+  margin-bottom: 4px;
+}
+
+.empty-subtext {
+  font-size: 13px;
+  color: var(--muted-color, #888);
+  max-width: 180px;
+  line-height: 1.4;
+}
+
 /* === Dark Mode === */
 .dark-mode .sidebar {
   background: #1e1e1e;
@@ -473,6 +495,16 @@
 
 .dark-mode .sidebar-toggle:hover svg {
   color: #fff;
+}
+
+.dark-mode .loading-chats,
+.dark-mode .empty-chats {
+  color: #aaa;
+}
+
+.dark-mode .loader-spinner {
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #9b7ff3;
 }
 
 .dark-mode .tooltip::after {

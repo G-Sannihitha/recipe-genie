@@ -23,16 +23,14 @@ const Sidebar = ({ currentChatId, onChatSelect, onNewChat }) => {
   const [renameValue, setRenameValue] = useState("");
   const [deleteChatId, setDeleteChatId] = useState(null);
   const [deleteChatTitle, setDeleteChatTitle] = useState("");
-  
   const menuRefs = useRef({});
   const sidebarRef = useRef(null);
 
-  // ✅ use environment variable
+  // ✅ API base
   const BASE_URL = process.env.REACT_APP_API_URL;
 
-  // --- Global tooltip state (collapsed only) ---
+  // --- Global tooltip (for collapsed sidebar) ---
   const [tip, setTip] = useState({ show: false, text: "", top: 0, left: 0 });
-
   const showGlobalTip = (e, text) => {
     const r = e.currentTarget.getBoundingClientRect();
     setTip({
@@ -44,7 +42,7 @@ const Sidebar = ({ currentChatId, onChatSelect, onNewChat }) => {
   };
   const hideGlobalTip = () => setTip((t) => ({ ...t, show: false }));
 
-  // --- Load Chats ---
+  // --- Load user chats ---
   const loadUserChats = async () => {
     if (!user) return;
     try {
@@ -73,33 +71,28 @@ const Sidebar = ({ currentChatId, onChatSelect, onNewChat }) => {
     return () => (window.sidebarRefresh = null);
   }, []);
 
-  // --- Click Outside Detection for Context Menu ---
+  // --- Click outside detection ---
   useEffect(() => {
     const handleClickOutside = (e) => {
-      // Close context menu if clicked outside
       if (activeMenu) {
-        const clickedOutside = Object.values(menuRefs.current).every(ref => 
-          ref && !ref.contains(e.target)
+        const clickedOutside = Object.values(menuRefs.current).every(
+          (ref) => ref && !ref.contains(e.target)
         );
-        
-        if (clickedOutside) {
-          setActiveMenu(null);
-        }
+        if (clickedOutside) setActiveMenu(null);
       }
-      
-      // Close delete modal if clicked outside
-      if (deleteChatId && !e.target.closest('.delete-modal')) {
+
+      if (deleteChatId && !e.target.closest(".delete-modal")) {
         setDeleteChatId(null);
         setDeleteChatTitle("");
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    document.addEventListener('touchstart', handleClickOutside);
-    
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('touchstart', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
     };
   }, [activeMenu, deleteChatId]);
 
@@ -111,7 +104,7 @@ const Sidebar = ({ currentChatId, onChatSelect, onNewChat }) => {
     if (next) document.body.classList.add("sidebar-collapsed");
     else document.body.classList.remove("sidebar-collapsed");
     hideGlobalTip();
-    setActiveMenu(null); // Close any open menus when collapsing
+    setActiveMenu(null);
   };
 
   useEffect(() => {
@@ -209,10 +202,10 @@ const Sidebar = ({ currentChatId, onChatSelect, onNewChat }) => {
 
   const handleChatSelect = (chatId) => {
     onChatSelect?.(chatId);
-    setActiveMenu(null); // Close any open menu when selecting a chat
+    setActiveMenu(null);
   };
 
-  // --- Grouping Chats by Date ---
+  // --- Grouping chats ---
   const grouped = (() => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -276,9 +269,9 @@ const Sidebar = ({ currentChatId, onChatSelect, onNewChat }) => {
               </button>
             )}
             {activeMenu === chat.id && !collapsed && (
-              <div 
-                className="context-menu modern" 
-                ref={el => menuRefs.current[chat.id] = el}
+              <div
+                className="context-menu modern"
+                ref={(el) => (menuRefs.current[chat.id] = el)}
                 onClick={(e) => e.stopPropagation()}
               >
                 <button
@@ -345,9 +338,17 @@ const Sidebar = ({ currentChatId, onChatSelect, onNewChat }) => {
         {!collapsed && (
           <div className="chat-history">
             {loading ? (
-              <div className="loading-chats">Loading chats…</div>
+              <div className="loading-chats subtle-text">
+                <div className="loader-spinner"></div>
+                <span>Loading your chats...</span>
+              </div>
             ) : chats.length === 0 ? (
-              <div className="empty-chats">No chats yet</div>
+              <div className="empty-chats">
+                <p className="empty-title">No chats yet</p>
+                <p className="empty-subtext">
+                  Start a new conversation to begin your cooking journey 🍳
+                </p>
+              </div>
             ) : (
               <div className="chat-list">
                 {renderGroup(grouped.today, "Today")}
@@ -370,17 +371,14 @@ const Sidebar = ({ currentChatId, onChatSelect, onNewChat }) => {
       )}
 
       {deleteChatId && (
-        <div 
+        <div
           className="delete-modal-overlay"
           onClick={() => {
             setDeleteChatId(null);
             setDeleteChatTitle("");
           }}
         >
-          <div 
-            className="delete-modal"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="delete-modal" onClick={(e) => e.stopPropagation()}>
             <h3>Delete chat?</h3>
             <p>
               This will delete <strong>{deleteChatTitle}</strong>.
