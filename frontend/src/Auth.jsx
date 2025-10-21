@@ -9,6 +9,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { auth, googleProvider } from "./firebase";
 import { Eye, EyeOff } from "lucide-react"; // Import eye icons
+import wallpaper from "./assets/Wallpaper.png";
 import "./Auth.css";
 
 const Auth = () => {
@@ -133,7 +134,14 @@ const Auth = () => {
 
   return (
     <div className="auth-container">
-      <div className="auth-wallpaper"></div>
+      <div className="auth-wallpaper"
+        style={{
+          backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.92)), url(${wallpaper})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      ></div>
 
       <div className="auth-card">
         {/* ===== App Header ===== */}
