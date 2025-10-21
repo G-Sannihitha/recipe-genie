@@ -3,11 +3,14 @@ import os
 import firebase_admin
 from firebase_admin import credentials, firestore
 
-# Get the absolute path to serviceAccountKey.json
-current_dir = os.path.dirname(__file__)
-cred_path = os.path.join(current_dir, "serviceAccountKey.json")
+# === Determine the correct Firebase credentials path ===
+# Use Render's mounted secret file if available, otherwise fall back to local.
+cred_path = "/etc/secrets/serviceAccountKey.json"
+if not os.path.exists(cred_path):
+    current_dir = os.path.dirname(__file__)
+    cred_path = os.path.join(current_dir, "serviceAccountKey.json")
 
-# Initialize Firebase only once
+# === Initialize Firebase only once ===
 if not firebase_admin._apps:
     cred = credentials.Certificate(cred_path)
     firebase_admin.initialize_app(cred)
@@ -15,6 +18,8 @@ if not firebase_admin._apps:
 # Firestore client
 db = firestore.client()
 
+
+# ===================== Utility Functions =====================
 
 def save_chat(user_id: str, chat_id: str, user_message: str, bot_reply: str):
     chat_ref = (
@@ -41,38 +46,27 @@ def save_chat(user_id: str, chat_id: str, user_message: str, bot_reply: str):
 
 
 def save_user_preferences(user_id: str, preferences: dict):
-    """
-    Save or update user preferences in Firestore.
-    Example: {"diet": "vegetarian", "spicy": True, "gluten_free": False}
-    """
+    """Save or update user preferences in Firestore."""
     pref_ref = db.collection("users").document(user_id)
     pref_ref.set({"preferences": preferences}, merge=True)
 
 
 def get_user_preferences(user_id: str) -> dict:
-    """
-    Fetch user preferences from Firestore.
-    Returns empty dict if none found.
-    """
+    """Fetch user preferences from Firestore. Returns empty dict if none found."""
     pref_ref = db.collection("users").document(user_id).get()
     if pref_ref.exists:
         return pref_ref.to_dict().get("preferences", {})
     return {}
 
 
-# --- NEW: Conversation state handling ---
+# --- Conversation state handling ---
 def save_conversation_state(user_id: str, state: dict):
-    """
-    Save temporary conversation state for a user.
-    Example: {"mode": "clarify_ingredient", "ingredient": "chicken"}
-    """
+    """Save temporary conversation state for a user."""
     db.collection("users").document(user_id).set({"state": state}, merge=True)
 
 
 def get_conversation_state(user_id: str) -> dict:
-    """
-    Get the stored conversation state for a user.
-    """
+    """Get the stored conversation state for a user."""
     doc = db.collection("users").document(user_id).get()
     if doc.exists:
         return doc.to_dict().get("state", {})
@@ -80,15 +74,12 @@ def get_conversation_state(user_id: str) -> dict:
 
 
 def clear_conversation_state(user_id: str):
-    """
-    Clear stored conversation state after it's resolved.
-    """
+    """Clear stored conversation state after it's resolved."""
     db.collection("users").document(user_id).update({"state": firestore.DELETE_FIELD})
-    
-# Add this to backend/app/services/firestore_db.py
+
+
 def save_chat_message(user_id: str, chat_id: str, user_message: str, bot_reply: str):
     """Save a complete chat message exchange"""
-    # Update chat metadata
     chat_ref = db.collection("users").document(user_id).collection("conversations").document(chat_id)
     
     # Generate title from first message if it's the first message
