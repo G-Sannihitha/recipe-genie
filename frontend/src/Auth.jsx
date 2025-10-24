@@ -289,7 +289,7 @@ const Auth = () => {
         </div>
       </div>
       <div className="auth-footer-page">
-        <p>© 2025 Recipe Genie • Built with ❤️ by Sannihitha Gudimalla</p>
+        <p>© 2025 Recipe Genie • Built with ❤️ by <strong>Sannihitha Gudimalla</strong></p>
       </div>
     </div>
   );
