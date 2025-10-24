@@ -341,8 +341,8 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -518,4 +518,45 @@
   white-space: normal !important;
   overflow: visible !important;
   text-overflow: unset !important;
+}
+
+/* === Dark Mode Delete Modal === */
+.dark-mode .delete-modal {
+  background: #2a2a2a;
+  /* Dark background */
+  color: #f1f1f1;
+  /* Light text */
+  border: 1px solid #444;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+}
+
+.dark-mode .delete-modal h3 {
+  color: #fff;
+}
+
+.dark-mode .delete-modal p {
+  color: #ccc;
+}
+
+.dark-mode .delete-modal strong {
+  color: #fff;
+}
+
+.dark-mode .cancel-btn {
+  background: #f8f8f8;
+  color: #000;
+  border: 1px solid #666;
+}
+
+.dark-mode .cancel-btn:hover {
+  background: #e5e5e5;
+}
+
+.dark-mode .confirm-btn {
+  background: #e63946;
+  color: #fff;
+}
+
+.dark-mode .confirm-btn:hover {
+  background: #c92d3a;
 }

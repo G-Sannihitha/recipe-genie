@@ -199,3 +199,108 @@
         margin-top: max(8px, env(safe-area-inset-top));
     }
 }
+
+/* === Logout Confirmation Modal === */
+.mobile-logout-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    animation: fadeIn 0.2s ease;
+}
+
+.mobile-logout-modal {
+    background: var(--bg-color);
+    color: var(--text-color);
+    border-radius: 12px;
+    padding: 24px 28px;
+    width: 90%;
+    max-width: 360px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    animation: scaleIn 0.2s ease;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.mobile-logout-modal h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.mobile-logout-modal p {
+    font-size: 14px;
+    color: var(--muted-color);
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.mobile-modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.mobile-logout-btn {
+    background: #e63946;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.25s ease;
+}
+
+.mobile-logout-btn:hover {
+    background: #d62828;
+}
+
+.mobile-cancel-btn {
+    background: transparent;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 8px 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.25s ease;
+}
+
+.mobile-cancel-btn:hover {
+    background: var(--hover-color);
+}
+
+/* Dark mode support */
+.dark-mode .mobile-logout-modal {
+    background: #2a2a2a;
+    color: #f1f1f1;
+}
+
+.dark-mode .mobile-cancel-btn {
+    border-color: #444;
+    color: #ddd;
+}
+
+.dark-mode .mobile-cancel-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}

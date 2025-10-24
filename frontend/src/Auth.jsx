@@ -153,8 +153,8 @@ const Auth = () => {
           <div className="welcome-text">
             <p>
               {isSignUp
-                ? "Create an account to start your culinary adventure."
-                : "Log in to continue your culinary journey."}
+                ? "Create your Recipe Genie account!"
+                : "👋 Welcome back, Chef!"}
             </p>
           </div>
         </div>
@@ -287,6 +287,9 @@ const Auth = () => {
             </button>
           </p>
         </div>
+      </div>
+      <div className="auth-footer-page">
+        <p>© 2025 Recipe Genie • Built with ❤️ by Sannihitha Gudimalla</p>
       </div>
     </div>
   );
