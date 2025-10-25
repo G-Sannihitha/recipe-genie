@@ -477,3 +477,22 @@
     text-decoration: underline;
 }
 
+/* ===== Prevent overlap between auth card and footer ===== */
+.auth-card {
+    margin-bottom: 60px;
+    /* adds consistent gap above footer */
+}
+
+/* Slightly reduce margin for smaller phones */
+@media (max-height: 700px) {
+    .auth-card {
+        margin-bottom: 40px;
+    }
+}
+
+/* Dynamic safety padding for iPhones */
+@supports (padding: max(0px)) {
+    .auth-card {
+        margin-bottom: max(60px, env(safe-area-inset-bottom));
+    }
+}
