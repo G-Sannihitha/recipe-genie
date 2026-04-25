@@ -10,6 +10,7 @@ const Chat = ({ currentChatId = null, onChatCreated = () => {}, isMobile = false
   const [isLoading, setIsLoading] = useState(false);
   const [activeChatId, setActiveChatId] = useState(currentChatId);
   const messagesEndRef = useRef(null);
+  const justCreatedRef = useRef(false);
 
   const BASE_URL = process.env.REACT_APP_API_URL;
 
@@ -82,8 +83,13 @@ const Chat = ({ currentChatId = null, onChatCreated = () => {}, isMobile = false
 
   useEffect(() => {
     if (currentChatId) {
-      loadChatMessages(currentChatId);
-      setActiveChatId(currentChatId);
+      if (justCreatedRef.current) {
+        justCreatedRef.current = false;
+        setActiveChatId(currentChatId);
+      } else {
+        loadChatMessages(currentChatId);
+        setActiveChatId(currentChatId);
+      }
     } else {
       setMessages([]);
     }
@@ -146,6 +152,7 @@ const Chat = ({ currentChatId = null, onChatCreated = () => {}, isMobile = false
       let chatId = activeChatId;
       if (!chatId) {
         chatId = await createNewChat();
+        justCreatedRef.current = true;
         setActiveChatId(chatId);
         onChatCreated?.(chatId);
       }

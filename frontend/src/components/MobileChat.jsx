@@ -10,6 +10,7 @@ const MobileChat = ({ currentChatId = null, onChatCreated = () => {} }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [activeChatId, setActiveChatId] = useState(currentChatId);
   const messagesEndRef = useRef(null);
+  const justCreatedRef = useRef(false);
 
   const BASE_URL = process.env.REACT_APP_API_URL;
 
@@ -70,8 +71,13 @@ const MobileChat = ({ currentChatId = null, onChatCreated = () => {} }) => {
   // Load messages when chat changes
   useEffect(() => {
     if (currentChatId) {
-      loadChatMessages(currentChatId);
-      setActiveChatId(currentChatId);
+      if (justCreatedRef.current) {
+        justCreatedRef.current = false;
+        setActiveChatId(currentChatId);
+      } else {
+        loadChatMessages(currentChatId);
+        setActiveChatId(currentChatId);
+      }
     } else {
       setMessages([]);
       setActiveChatId(null);
@@ -125,6 +131,7 @@ const MobileChat = ({ currentChatId = null, onChatCreated = () => {} }) => {
         if (newChatResponse.ok) {
           const newChatData = await newChatResponse.json();
           chatId = newChatData.chat_id;
+          justCreatedRef.current = true;
           setActiveChatId(chatId);
           onChatCreated(chatId);
         } else {
