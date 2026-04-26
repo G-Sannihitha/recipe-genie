@@ -195,8 +195,84 @@ const Chat = ({ currentChatId = null, onChatCreated = () => {}, isMobile = false
     e.target.style.height = e.target.scrollHeight + 'px';
   };
 
-  const handleSuggestionClick = (text) => {
-    setInput(text);
+  const suggestions = [
+    {
+      title: "🥪 Quick Breakfast",
+      desc: "Discover quick and easy breakfast recipes",
+      prompts: [
+        "How to make egg sandwich?",
+        "How to make avocado toast?",
+        "How to make French toast?",
+        "How to make overnight oats?",
+        "How to make banana pancakes?",
+        "How to make a veggie omelette?",
+      ],
+    },
+    {
+      title: "🍅 Indian Condiments",
+      desc: "Authentic chutneys, pickles and Indian sides",
+      prompts: [
+        "Tomato chutney recipe",
+        "How to make coconut chutney?",
+        "How to make mint chutney?",
+        "How to make tamarind chutney?",
+        "How to make onion chutney?",
+        "How to make raw mango pickle?",
+      ],
+    },
+    {
+      title: "🍗 Ingredient Helper",
+      desc: "Find recipes based on what you already have",
+      prompts: [
+        "What can I make with chicken and potatoes?",
+        "What can I make with eggs and cheese?",
+        "What can I make with leftover rice?",
+        "What can I make with spinach and paneer?",
+        "What can I make with bananas?",
+        "What can I make with canned chickpeas?",
+      ],
+    },
+    {
+      title: "🔄 Smart Substitutions",
+      desc: "Find perfect ingredient replacements",
+      prompts: [
+        "Substitute for eggs in baking",
+        "What can I use instead of butter in baking?",
+        "Substitute for buttermilk in a recipe",
+        "What can replace heavy cream in a recipe?",
+        "Substitute for all-purpose flour",
+        "What can I use instead of yogurt in cooking?",
+      ],
+    },
+    {
+      title: "📅 Meal Planning",
+      desc: "Get customized weekly meal plans",
+      prompts: [
+        "Plan a vegetarian meal for this week",
+        "Plan a high-protein meal plan for the week",
+        "Plan a 7-day budget-friendly meal plan",
+        "Plan a healthy breakfast and lunch for 5 days",
+        "Plan a meal plan for weight loss",
+        "Plan a quick 30-minute meal plan for the week",
+      ],
+    },
+    {
+      title: "👨‍🍳 Cooking Basics",
+      desc: "Master essential cooking skills and techniques",
+      prompts: [
+        "Explain different cooking techniques",
+        "What is the difference between sautéing and stir-frying?",
+        "How do I properly season a cast iron pan?",
+        "What are basic knife skills I should know?",
+        "How do I make a perfect roux?",
+        "What is the difference between baking and roasting?",
+      ],
+    },
+  ];
+
+  const handleSuggestionClick = (prompts) => {
+    const random = prompts[Math.floor(Math.random() * prompts.length)];
+    setInput(random);
     setTimeout(() => {
       document.querySelector('.chat-input textarea')?.focus();
     }, 100);
@@ -213,17 +289,10 @@ const Chat = ({ currentChatId = null, onChatCreated = () => {}, isMobile = false
               <p className="welcome-subtitle">Your AI cooking assistant ready to help with recipes, substitutions, and culinary guidance</p>
             </div>
             <div className="suggestions-grid">
-              {[
-                ["🥪 Quick Breakfast", "How to make egg sandwich?", "Get step-by-step instructions for perfect egg sandwiches"],
-                ["🍅 Indian Condiments", "Tomato chutney recipe", "Learn authentic tomato chutney with pro tips"],
-                ["🍗 Ingredient Helper", "What can I make with chicken and potatoes?", "Discover recipes based on what you have"],
-                ["🔄 Smart Substitutions", "Substitute for eggs in baking", "Find perfect ingredient replacements"],
-                ["📅 Meal Planning", "Plan a vegetarian meal for this week", "Get customized weekly meal plans"],
-                ["👨‍🍳 Cooking Basics", "Explain different cooking techniques", "Master fundamental cooking methods"]
-              ].map(([title, prompt, desc], i) => (
-                <div key={i} className="suggestion-card" onClick={() => handleSuggestionClick(prompt)}>
-                  <h4>{title}</h4>
-                  <p>{desc}</p>
+              {suggestions.map((s, i) => (
+                <div key={i} className="suggestion-card" onClick={() => handleSuggestionClick(s.prompts)}>
+                  <h4>{s.title}</h4>
+                  <p>{s.desc}</p>
                 </div>
               ))}
             </div>
