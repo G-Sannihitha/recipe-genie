@@ -1,5 +1,5 @@
 # backend/app/main.py
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
@@ -40,7 +40,7 @@ def load_chat_messages(user_id: str, chat_id: str):
     return {"messages": get_chat_messages(user_id, chat_id)}
 
 @app.post("/chat/message")
-def send_message(request: dict):
+def send_message(request: dict, background_tasks: BackgroundTasks):
     user_id = request.get("user_id")
     chat_id = request.get("chat_id")
     message = request.get("message")
@@ -48,7 +48,7 @@ def send_message(request: dict):
         raise HTTPException(status_code=400, detail="Missing fields")
     reply = ask_llm(message)
     reply = clean_all_markdown(reply)
-    save_chat_message(user_id, chat_id, message, reply)
+    background_tasks.add_task(save_chat_message, user_id, chat_id, message, reply)
     return {"reply": reply, "chat_id": chat_id}
 
 def clean_all_markdown(text: str):
