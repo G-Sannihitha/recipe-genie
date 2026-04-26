@@ -46,7 +46,8 @@ def send_message(request: dict, background_tasks: BackgroundTasks):
     message = request.get("message")
     if not user_id or not message:
         raise HTTPException(status_code=400, detail="Missing fields")
-    reply = ask_llm(message)
+    history = get_chat_messages(user_id, chat_id) if chat_id else []
+    reply = ask_llm(message, history)
     reply = clean_all_markdown(reply)
     background_tasks.add_task(save_chat_message, user_id, chat_id, message, reply)
     return {"reply": reply, "chat_id": chat_id}

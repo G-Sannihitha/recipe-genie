@@ -13,7 +13,7 @@ if not api_key:
 # Define client globally
 client = OpenAI(api_key=api_key)
 
-def ask_llm(prompt: str) -> str:
+def ask_llm(prompt: str, history: list = None) -> str:
     system_prompt = """You are Recipe Genie, an expert AI chef assistant.
 
 CRITICAL BEHAVIOR RULES:
@@ -44,12 +44,15 @@ FORMATTING RULES:
 - For clarifications: answer the specific question only"""
 
     try:
+        messages = [{"role": "system", "content": system_prompt}]
+        if history:
+            for msg in history[-10:]:
+                messages.append({"role": msg["role"], "content": msg["content"]})
+        messages.append({"role": "user", "content": prompt})
+
         response = client.chat.completions.create(
             model="gpt-4o-mini",
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": prompt},
-            ],
+            messages=messages,
             max_tokens=800,
             temperature=0.7,
         )
